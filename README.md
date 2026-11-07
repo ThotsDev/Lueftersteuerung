@@ -2,7 +2,7 @@
 
 ESP32-Projekt für einen späteren Ersatz der Buderus VC40 H mit lokaler Matter-Anbindung an Home Assistant.
 
-**Stand: 07.11.2026:** ESP auf COM5 erfolgreich geflasht und mit Home Assistant gekoppelt: ESP32-D0WD-V3, Revision v3.1, 4 MiB Flash. Nativer Windows-Build: 1.557.411 Bytes Anwendung (49 %), 106.008 Bytes statischer RAM (32 %). Aus/Leicht/Mittel/Stark, Durchzug/Wechsellüftung, alle sechs 2-zu-2-Raumzuordnungen, zwei reale Timerphasen und Konfigurations-/Fabric-Persistenz am Gerät geprüft. Drei neue Auswahlfelder sind laut Nutzer in Home Assistant sichtbar. Ausschließlich simulierter Lüftertreiber, keinerlei GPIO-Zugriffe.
+**Stand: 07.11.2026:** ESP auf COM5 erfolgreich geflasht und mit Home Assistant gekoppelt: ESP32-D0WD-V3, Revision v3.1, 4 MiB Flash. Nativer Windows-Build: 1.557.503 Bytes Anwendung (49 %), 106.008 Bytes statischer RAM (32 %). Aus/Leicht/Mittel/Stark, Durchzug/Wechsellüftung, alle sechs 2-zu-2-Raumzuordnungen, zwei reale Timerphasen und Konfigurations-/Fabric-Persistenz am Gerät geprüft. Drei neue Auswahlfelder sind laut Nutzer in Home Assistant sichtbar. Ausschließlich simulierter Lüftertreiber, keinerlei GPIO-Zugriffe.
 
 Bestätigt: vier Lüfter (Modelle unbekannt), Home Assistant als Container. Die separat installierte ESP-IDF v6.1 wird für den Arduino-Windows-Build nicht benötigt. Siehe [Bring-up](docs/bringup.md).
 

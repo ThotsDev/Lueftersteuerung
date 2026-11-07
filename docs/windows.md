@@ -4,6 +4,8 @@ Dieser Build verwendet Arduino CLI 1.5.1 und Arduino-ESP32 3.3.12 mit vorgebaute
 
 Zielgerät: ESP32-D0WD-V3, 4 MiB Flash, COM5. Die Firmware simuliert vier Lüftungsstufen ohne GPIO-Ausgabe. Der portable Controller wird aus `components/ventilation` übernommen. Der Arduino-Einstieg liegt unter `firmware/windows/ventilation_controller`.
 
+Die Matter-Geräteangaben stehen zentral in [`device_identity.hpp`](../firmware/windows/ventilation_controller/device_identity.hpp): Herstellername, Produktname, Gerätebezeichnung, optionale Seriennummer und Hardwareversion samt Beschreibung. Leere optionale Texte beziehungsweise `std::nullopt` behalten die SDK-Vorgaben bei. Die dort ebenfalls aufgeführten Vendor-/Product-IDs stammen aus dem vorgebauten SDK und sind keine frei änderbaren Laufzeiteinstellungen. Nach Änderungen neu bauen und hochladen; die Firmware wendet die Angaben vor `Matter.begin()` an. Die individuellen Kopplungsdaten bleiben unabhängig davon im ESP-NVS.
+
 ## Einrichtung und Build
 
 PowerShell 7 im Projektverzeichnis:
@@ -72,7 +74,9 @@ Im Matter-Controller werden Aus und 33/66/100 Prozent auf Aus/Leicht/Mittel/Star
 
 ## Validierungsstand
 
-**Buildprüfung am 07.11.2026 bestanden:** Arduino CLI 1.5.1, ESP32-Core 3.3.12, Anwendung 1.557.411 / 3.145.728 Bytes (49 %), statischer RAM 106.008 / 327.680 Bytes (32 %). Die 221.672 verbleibenden Bytes sind vor den dynamischen Laufzeitallokationen angegeben, keine Messung des freien Heaps nach dem Matter-Start. PowerShell-Syntax und VS-Code-Task-JSON geprüft.
+**Buildprüfung am 07.11.2026 bestanden:** Arduino CLI 1.5.1, ESP32-Core 3.3.12, Anwendung nach Auslagerung der Geräteangaben 1.557.503 / 3.145.728 Bytes (49 %), statischer RAM 106.008 / 327.680 Bytes (32 %). Die 221.672 verbleibenden Bytes sind vor den dynamischen Laufzeitallokationen angegeben, keine Messung des freien Heaps nach dem Matter-Start. PowerShell-Syntax und VS-Code-Task-JSON geprüft.
+
+Nach der Auslagerung in `device_identity.hpp` wurde erneut geflasht und ein Starttest durchgeführt: Matter-Endpunkte bereit, WLAN verbunden, bestehende Fabric erhalten, genau ein Boot ohne Identitäts-/Laufzeitfehler und Stufe Aus. Die vorhandenen Geräteangaben wurden bei dieser Umstrukturierung nicht geändert.
 
 **Gerätetest am 07.11.2026 bestanden:** Upload auf COM5 einschließlich esptool-Hashprüfung aller geschriebenen Images. Boot ohne Panic, USB-Statusabfrage, Ablehnung überlanger Eingaben, WLAN-Einrichtung aus lokaler Datei und Matter-Start. Leere SSID wird abgewiesen, eine abgebrochene Einrichtung verändert die bestehende Verbindung nicht. Die erste Matter-Kopplung war laut Nutzer erfolgreich.
 

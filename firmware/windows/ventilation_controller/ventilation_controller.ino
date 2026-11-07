@@ -9,6 +9,7 @@
 #include <ventilation.hpp>
 #include <atomic>
 #include "control_modes.hpp"
+#include "device_identity.hpp"
 
 #ifndef CONFIG_ESP_MATTER_ENABLE_DATA_MODEL
 #error "This ESP32 core does not contain the required precompiled Matter libraries."
@@ -332,8 +333,10 @@ void loop() {
         Serial.println("ERROR: Matter control endpoint initialization failed; restarting");
         delay(1000); ESP.restart();
       }
-      Matter.setDeviceName("Lueftungssteuerung Simulation");
-      Matter.setProductName("Lueftungssteuerung");
+      if (!device_identity::apply()) {
+        Serial.println("ERROR: invalid Matter device identity; restarting");
+        delay(1000); ESP.restart();
+      }
       fan.onChangeSpeedPercent([](uint8_t percent) {
         return percent <= 100 && queueRequest(ControlRequestType::percent, percent);
       });
