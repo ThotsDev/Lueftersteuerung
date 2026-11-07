@@ -1,0 +1,3 @@
+* text=auto
+*.sh text eol=lf
+sdk-versions.env text eol=lf
