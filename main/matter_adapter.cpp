@@ -23,7 +23,7 @@ void apply_request(intptr_t percent) {
     }
     const auto stage = controller->stage();
     const uint8_t current = ventilation::percent_from_stage(stage);
-    const uint8_t mode = current == 0 ? 0 : current <= 25 ? 1 : current <= 50 ? 2 : 3;
+    const uint8_t mode = static_cast<uint8_t>(stage);
     publishing = true;
     const auto setting_error = publish(FanControl::Attributes::PercentSetting::Id,
                                        esp_matter_nullable_uint8(current));
@@ -67,8 +67,8 @@ esp_err_t ventilation_attribute_callback(esp_matter::attribute::callback_type_t 
     const bool is_percent = attribute_id == FanControl::Attributes::PercentSetting::Id;
     if ((is_percent && raw > 100) || (!is_percent && raw > 3)) return ESP_ERR_INVALID_ARG;
     if (type == attribute::POST_UPDATE) {
-        // FanMode has three named speeds; four stages are selectable via percent.
-        const unsigned percent = is_percent ? raw : raw == 0 ? 0 : raw == 1 ? 25 : raw == 2 ? 50 : 100;
+        // Off plus three active speeds, matching the portable controller.
+        const unsigned percent = is_percent ? raw : raw == 0 ? 0 : raw == 1 ? 33 : raw == 2 ? 66 : 100;
         auto error = chip::DeviceLayer::PlatformMgr().ScheduleWork(apply_request, percent);
         return error == CHIP_NO_ERROR ? ESP_OK : ESP_FAIL;
     }

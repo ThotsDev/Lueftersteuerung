@@ -1,0 +1,42 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Windows: Setup",
+      "type": "process",
+      "command": "pwsh.exe",
+      "args": ["-NoProfile", "-File", "${workspaceFolder}/scripts/setup-windows.ps1"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Windows: Build",
+      "type": "process",
+      "command": "pwsh.exe",
+      "args": ["-NoProfile", "-File", "${workspaceFolder}/scripts/build-windows.ps1"],
+      "group": {"kind": "build", "isDefault": true},
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Windows: Upload COM5",
+      "type": "process",
+      "command": "pwsh.exe",
+      "args": ["-NoProfile", "-File", "${workspaceFolder}/scripts/upload-windows.ps1", "-Port", "COM5"],
+      "dependsOn": "Windows: Build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Windows: WLAN einrichten",
+      "type": "process",
+      "command": "pwsh.exe",
+      "args": ["-NoProfile", "-File", "${workspaceFolder}/scripts/setup-wifi-windows.ps1", "-Port", "COM5"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Windows: Monitor COM5",
+      "type": "process",
+      "command": "pwsh.exe",
+      "args": ["-NoProfile", "-File", "${workspaceFolder}/scripts/monitor-windows.ps1", "-Port", "COM5"],
+      "problemMatcher": []
+    }
+  ]
+}

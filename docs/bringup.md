@@ -49,6 +49,8 @@ Der verwendete Aufruf (nicht erneut unter demselben Dateinamen ausführen):
 
 ## SDK
 
+**Aktueller Entwicklungsweg:** [Native Windows-Anleitung](windows.md), ohne WSL oder Cloud. Die folgenden Angaben betreffen die alternative direkte ESP-IDF-/ESP-Matter-Umgebung.
+
 Die installierte Windows-Version v6.1 entspricht noch nicht der festgehaltenen Matter-Basis (ESP-IDF v5.4.1). Sie wird deshalb nicht automatisch zum Bauen dieses Matter-Projekts verwendet. Die Installation bleibt nutzbar; entweder muss die bestehende Basis separat eingerichtet oder die Kombination mit einem neueren ESP-Matter gezielt geprüft und umgestellt werden. Eine installierte ESP-IDF-Version allein ersetzt ESP-Matter und dessen Buildvoraussetzungen nicht.
 
 Die vom Installer erzeugte Aktivierung liegt unter `C:\Espressif\tools\Microsoft.v6.1.PowerShell_profile.ps1`. Für reine Diagnose funktioniert auch der direkte Aufruf mit den passenden Umgebungsvariablen:
@@ -85,5 +87,9 @@ USB-Zugriff aus WSL benötigt usbipd-win. Alternativ Build-Artefakte zurück nac
 ## Validierungsstand
 
 Hosttests erfolgreich: alle 101 gültigen Prozentwerte, ungültige Werte, Aus und abgelehnte Ausgangsbefehle. PowerShell- und Bash-Syntax geprüft. Die Hosttests prüfen ausschließlich die portable Stufenlogik. Matter-Adapter, SDK-Konfiguration, BLE/WLAN-Inbetriebnahme und Home-Assistant-Kompatibilität erfordern noch einen echten SDK-Build und Gerätetest.
+
+Inzwischen zusätzlich bestätigt: Der Arduino-Windows-Build mit ESP32-Core 3.3.12 ist erfolgreich. Aktuelle Anwendung: 1.557.411 Bytes, statischer RAM: 106.008 Bytes. Firmware auf COM5 geflasht und von esptool verifiziert. USB-WLAN-Konfiguration und Matter-Kopplung funktionieren. Die neuen Stufen, Betriebsarten, sechs Raumzuordnungen und zwei echte Richtungswechsel sind am Gerät geprüft; nach Reset bleiben Konfiguration und bestehende Matter-Fabric erhalten, die Stufe startet Aus. Der ausführliche aktuelle Teststand steht in [Windows](windows.md). Die direkte ESP-IDF-Variante bleibt ungeprüft.
+
+Vor dem Betriebsarten-Update wurde zusätzlich der gekoppelte Flash unter `.tools/backups/esp32-before-modes-20261107.bin` gesichert (4.194.304 Bytes, SHA-256 `DFF8176AB3B042CB3532398237F629A20255BF661D1F69EBE64B8C0E69A7E0D0`). Diese Sicherung enthält Geräte- und Kopplungsdaten und bleibt lokal.
 
 [Espressif: Entwicklung und Windows/WSL](https://docs.espressif.com/projects/esp-matter/en/latest/esp32/developing.html)
